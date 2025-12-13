@@ -5,6 +5,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.xml.crypto.Data;
+
 public class DataFetcher {
     private String url;
 
@@ -26,7 +28,7 @@ public class DataFetcher {
         }
     }
 
-    void getBlock(String cssquery) throws Exception {
+    Element[] getBlock(String cssquery, String type) throws Exception {
         if (url == null) {
             throw new Exception("url String is not initialized: DataFetchKit.DataFetcher.getBlock()");
         }
@@ -34,22 +36,41 @@ public class DataFetcher {
             throw new Exception("content Document is not initialized: DataFetchKit.DataFetcher.getBlock()");
         }
         try {
-            this.content.select("div[class*=" + cssquery + "]");
+            Elements elements = this.content.select(type + "[id*=" + cssquery + "]");
 
-            for (Element item : this.content) {
 
+            Element[] elementArray = new Element[elements.size()];
+
+            int count = 0;
+            for (Element item : elements) {
+                elementArray[count] = item;
+                count ++;
             }
 
-//            Element[] elementArray = new Element[];
-
-            for (Element item : this.content) {
-
-            }
-
+            return elementArray;
 
         } catch (Exception e) {
             throw new Exception("failed to get block: DataFetchKit.DataFetcher.getBlock()");
         }
     }
 
+
+//    public static void main(String[] args) {
+//        DataFetcher item = new DataFetcher();
+//
+//        item.setUrl("https://docs.wpilib.org/en/stable/index.html");
+//        try {
+//            item.setContent();
+//            Element[] blocks = item.getBlock("first-robotics-competition-control", "section");
+//
+//            for (Element block : blocks) {
+//                System.out.println(block.text());
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println("fuck");
+//        }
+//
+//
+//    }
 }
