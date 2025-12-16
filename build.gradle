@@ -1,5 +1,18 @@
+//plugins {
+//    id 'java'
+//}
 plugins {
-    id 'java'
+    id 'application'
+}
+
+application {
+    mainClass = 'com.davidan.Main' // Replace with your package and class name
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.davidan.Main' // Replace with your actual package and class name
+    }
 }
 
 group = 'com.davidan'
