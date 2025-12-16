@@ -21,7 +21,7 @@ public class RedditViewModel {
     private final String postSubreddit = "a[class*='text-neutral-content whitespace-nowrap']";
 
     dataDealer dataFetcher;
-    public model[] models;
+    public FeedModel[] models;
     Element[] modelElements;
 
     public RedditViewModel() {
@@ -30,13 +30,13 @@ public class RedditViewModel {
         try {
             Element[] temp = this.getElements(this.modelURL, this.postTitle);
 
-            this.models = new model[temp.length];
+            this.models = new FeedModel[temp.length];
 
             for (int i= 0; i < temp.length; i ++) {
                 this.models[i] = new FeedModel("", "", "", "");
             }
         } catch (Exception _){
-            this.models = new model[0];
+            this.models = new FeedModel[0];
             System.out.println("failed to initialize models: Models.RedditViewModel()");
         }
     }
@@ -68,27 +68,9 @@ public class RedditViewModel {
                     }
                     this.models[i].setParagraph(tempParagraph);
                 }
-
-                var tempDoc = this.getElements("https://reddit.com" + articlesTemp[i].attr("permalink"), this.postComments);
-
-                var tempFirst = tempDoc[0].select("p");
-                String firstComment = "";
-                for (var item : tempFirst) {
-                    firstComment += item.text() + "\n";
-                }
-                var tempSecond = tempDoc[1].select("p");
-                String secondComment = "";
-                for (var item : tempSecond) {
-                    secondComment += item.text() + "\n";
-                }
-                String[] comments = {firstComment, secondComment};
-
-                this.models[i].setComments(comments);
-
-
             }
         } catch (Exception _) {
-            System.out.println("failed to get title: Models.RedditViewModel.getTitle()");
+            System.out.println("failed to get title or paragraph or comments: Models.RedditViewModel.getTitle()");
         }
     }
 

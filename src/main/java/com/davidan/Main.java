@@ -1,7 +1,8 @@
 package com.davidan;
-import org.fusesource.jansi.AnsiConsole;
-import org.fusesource.jansi.Ansi;
+import static com.davidan.ANSICodeKit.AnsiKit.*;
 import com.davidan.Models.RedditViewModel;
+
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -9,9 +10,17 @@ public class Main {
         RedditViewModel redditViewModel = new RedditViewModel();
         redditViewModel.setTitleNPara();
         redditViewModel.setSubreddit();
-        System.out.println(
-                Ansi.ansi().fgRed().a("the text is red").reset()
-        );
-//        AnsiConsole.out().println("");
+
+        for (var model : redditViewModel.models) {
+            print(model.getSubreddit(), "yellow");
+            print(model.getTitle());
+            for (var para : model.getParagraph()) {
+                print("| " + para);
+                print("");
+            }
+
+            print("Link: " + model.getLink(), "cyan");
+            System.out.println("\n----------------------\n");
+        }
     }
 }

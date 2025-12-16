@@ -25,7 +25,7 @@ public class DataFetcherWeb implements dataDealer {
         if (url == null) {
             throw new Exception("url string is not initialized: DataFetchKit.DataFetcher.setContent()");
         } else {
-            this.content = Jsoup.connect(this.url).get();
+            this.content = Jsoup.connect(this.url).header("Accept-Encoding", "gzip, deflate").userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0").maxBodySize(0).timeout(0).get();
         }
     }
 
