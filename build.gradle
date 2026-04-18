@@ -2,17 +2,14 @@
 //    id 'java'
 //}
 plugins {
-    id 'application'
+    id "java"
+    id "application"
+//    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 application {
-    mainClass = 'com.davidan.Main' // Replace with your package and class name
-}
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'com.davidan.Main' // Replace with your actual package and class name
-    }
+    mainClass = 'com.davidan.Main'
+    applicationName = "myReddit"
 }
 
 group = 'com.davidan'
@@ -33,3 +30,7 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+//tasks.withType(JavaExec).configureEach {
+//    standardInput = System.in
+//}

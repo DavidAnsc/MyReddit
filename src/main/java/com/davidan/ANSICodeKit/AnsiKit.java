@@ -1,7 +1,8 @@
 package com.davidan.ANSICodeKit;
 
 import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiConsole;
+
+import java.util.Scanner;
 
 public class AnsiKit {
     public static final String RESET = "\u001B[0m";
@@ -9,7 +10,13 @@ public class AnsiKit {
     public static final String DIM  = "\u001B[2m";
     public static final String BLUE   = "\u001B[34m";
 
-    public static void print(String text, String color) {
+    public static String scan(Scanner scanner) {
+        System.out.print(":");
+        final var value = scanner.nextLine();
+        return value;
+    }
+
+    public static void complexPrint(String text, String color) {
         final String colour = color.replace(" ", "").toLowerCase();
         Ansi ansi = Ansi.ansi();
         ansi = ansi.fgBrightGreen();
@@ -25,7 +32,7 @@ public class AnsiKit {
         System.out.println(ansi.a(text).reset());
     }
 
-    public static void print(String text, String color, String background) {
+    public static void complexPrint(String text, String color, String background) {
         Ansi ansi = Ansi.ansi();
         final String colour = color.replace(" ", "").toLowerCase();
         switch (colour) {
@@ -44,10 +51,10 @@ public class AnsiKit {
             case "green" -> ansi = ansi.bgGreen();
         }
 
-        System.out.println(ansi.a(text).reset());
+        System.out.println(ansi.a(text));
     }
 
-    public static void print(String text) {
+    public static void complexPrint(String text) {
         System.out.println(text);
     }
 }

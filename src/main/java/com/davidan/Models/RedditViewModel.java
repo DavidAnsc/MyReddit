@@ -1,24 +1,20 @@
 package com.davidan.Models;
 
 import com.davidan.DataFetchKit.DataFetcherWeb;
+
 import org.jsoup.nodes.Element;
+import com.davidan.ANSICodeKit.AnsiKit;
 import com.davidan.DataFetchKit.dataDealer;
 import org.jsoup.select.Elements;
 
 public class RedditViewModel {
     private final String modelURL = "https://www.reddit.com";
-    // <shreddit-post class="">
     private final String articleDec = "shreddit-post[class*='block relative cursor-pointer']";
-    // <a id="">
     private final String postTitle = "a[id*='post-title-t3']";
-    //
-    private final String postComments = "div[class*='md text-14-scalable rounded-2 pb-2xs']";
-    //
     private final String postParagraph = "shreddit-post-text-body" + " " + "p";
-    //
-    private final String postLink = "";
-    // <a class="">
     private final String postSubreddit = "a[class*='text-neutral-content whitespace-nowrap']";
+
+
 
     dataDealer dataFetcher;
     public FeedModel[] models;
@@ -35,7 +31,7 @@ public class RedditViewModel {
             for (int i= 0; i < temp.length; i ++) {
                 this.models[i] = new FeedModel("", "", "", "");
             }
-        } catch (Exception _){
+        } catch (Exception a){
             this.models = new FeedModel[0];
             System.out.println("failed to initialize models: Models.RedditViewModel()");
         }
@@ -46,8 +42,6 @@ public class RedditViewModel {
         dataFetcher.setContent();
         return dataFetcher.getBlock(queryCode);
     }
-
-
 
     public void setTitleNPara() {
         try {
@@ -69,7 +63,7 @@ public class RedditViewModel {
                     this.models[i].setParagraph(tempParagraph);
                 }
             }
-        } catch (Exception _) {
+        } catch (Exception a) {
             System.out.println("failed to get title or paragraph or comments: Models.RedditViewModel.getTitle()");
         }
     }
@@ -87,7 +81,29 @@ public class RedditViewModel {
         }
     }
 
+    public void getAnswer(String input) {
+        input = input.replace(" ", "").toLowerCase();
+        try {
+            if (input.isEmpty() || input.equals("q")) {
+                System.out.println("Exiting...");
+                System.exit(0);
+            } else if (Integer.parseInt(input) <= this.models.length && Integer.parseInt(input) > -1) {
+                FeedModel model;
+                if (Integer.parseInt(input) == 0) {
+                    System.out.println("You selected post 1");
+                    model = this.models[0];
+                } else {
+                    System.out.println("You selected post " + input);
+                    model = this.models[Integer.parseInt(input) - 1];
+                }
 
-    public static void main(String[] args) {
+                System.out.println("\n");
+                AnsiKit.complexPrint(model.getFullParagraph());
+            } else {
+                throw new Exception("invalid input");
+            }
+        } catch (Exception a) {
+            System.out.println("\ninvalid input\n");
+        }
     }
 }

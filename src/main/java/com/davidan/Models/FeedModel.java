@@ -52,8 +52,33 @@ public class FeedModel {
     }
 
 
-    public String[] getParagraph() {
-        return paragraph;
+    public String getNormalParagraph() {
+        if (this.paragraph[0].replace(" ", "").isBlank()) {
+            return "";
+        }
+        String paragraphTemp = this.paragraph[0];
+        var temp = paragraphTemp.substring(0, Math.min(this.paragraph[0].length(), 200));
+
+        for (int x = temp.length(); x > -1; x--) {
+            if (paragraphTemp.charAt(x) == ' ') {
+                return paragraphTemp.substring(0, x) + "...";
+            }
+        }
+
+        return "";
+
+    }
+
+    public String getFullParagraph() {
+        StringBuilder fullPara = new StringBuilder();
+        final var paraTemp = this.paragraph[0];
+        if (paraTemp.isBlank()) {
+            return "NO PARAGRAPH AVAILABLE";
+        }
+        for (String para : this.paragraph) {
+            fullPara.append(para).append("\n\n");
+        }
+        return fullPara.toString();
     }
 
     public String getImageLink() {
